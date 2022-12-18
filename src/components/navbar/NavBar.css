@@ -1,0 +1,20 @@
+/* Main navbar container */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+/* Logo container */
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+/* Navbar links */
+.navBarLink {
+  text-decoration: none;
+  margin-left: 40px;
+}

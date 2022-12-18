@@ -1,0 +1,6 @@
+/* Favorite list Container */
+.favorite-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

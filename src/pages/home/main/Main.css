@@ -1,0 +1,12 @@
+/* Home main container */
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../../../assets/food.jpeg");
+  background-size: 90vw;
+  height: 60vh;
+  margin-left: 40px;
+  margin-right: 40px;
+}
