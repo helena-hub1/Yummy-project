@@ -31,13 +31,15 @@ function App() {
 
   const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${userInput}`;
 
+  const getData = async () => {
+    const result = await fetch(url);
+    const data = await result.json();
+    setRecipes(data.meals);
+  };
+
   // Get data and handle the effect
   useEffect(() => {
-    const getData = async () => {
-      const result = await fetch(url);
-      const data = await result.json();
-      setRecipes(data.meals);
-    };
+    getData();
   }, [url]);
 
   return (
