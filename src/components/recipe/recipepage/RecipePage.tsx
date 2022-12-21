@@ -1,9 +1,10 @@
 import React from "react";
 
-import RecipePage from "../../components/recipe/recipepage/RecipePage";
-import { RecipeT } from "../../App";
+import RecipeList from "../recipelist/RecipeList";
+import SearchForm from "../../searchform/SearchForm";
+import { RecipeT } from "../../../App";
 
-// Prop type
+//prop type
 type Prop = {
   recipes: RecipeT[];
   setUserInput: React.Dispatch<React.SetStateAction<string>>;
@@ -11,18 +12,17 @@ type Prop = {
   favoriteRecipe: RecipeT[];
 };
 
-const Recipe = ({
+const Recipes = ({
   recipes,
   setUserInput,
   setFavoriteRecipe,
   favoriteRecipe,
 }: Prop) => {
-  // console.log(filteredRecipe, "from R");
   return (
     <div>
-      <RecipePage
+      <SearchForm setUserInput={setUserInput} />
+      <RecipeList
         recipes={recipes}
-        setUserInput={setUserInput}
         setFavoriteRecipe={setFavoriteRecipe}
         favoriteRecipe={favoriteRecipe}
       />
@@ -30,4 +30,4 @@ const Recipe = ({
   );
 };
 
-export default Recipe;
+export default Recipes;

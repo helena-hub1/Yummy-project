@@ -8,20 +8,8 @@ import Home from "./pages/home/Home";
 import Recipe from "./pages/recipe/Recipe";
 import NavBar from "./components/navbar/NavBar";
 
-// Declaring the type of recipe
-export type RecipeType = {
-  meals: {
-    idMeal: number;
-    strMeal: string;
-    strCategory: string;
-    strMealThumb: string;
-    strIngredient1: string;
-    strIngredient2: string;
-    strIngredient3: string;
-  }[];
-};
-// Declaring the type of item
-export type Item = {
+// Recipe
+export type RecipeT = {
   idMeal: number;
   strMeal: string;
   strCategory: string;
@@ -29,64 +17,32 @@ export type Item = {
   strIngredient1: string;
   strIngredient2: string;
   strIngredient3: string;
+  strMeasure1: string;
+  strMeasure2: string;
+  strMeasure3: string;
+  strInstructions: string;
 };
+
 function App() {
   // Initializing state arrays
   const [userInput, setUserInput] = useState("");
-  const [recipe, setRecipe] = useState<RecipeType>({ meals: [] });
-  const [filteredRecipe, setFilteredRecipe] = useState<RecipeType>({
-    meals: [],
-  });
-  const [favoriteColor, setFavoriteColor] = useState("grey");
-  const [favorite, setFavorite] = useState<Item[]>([]);
+  const [recipes, setRecipes] = useState<RecipeT[]>([]);
+  const [favoriteRecipe, setFavoriteRecipe] = useState<RecipeT[]>([]);
 
   const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${userInput}`;
 
-  // Fetching data
-
+  // Get data and handle the effect
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setRecipe(data))
-      .catch((error) => console.log(error));
+    const getData = async () => {
+      const result = await fetch(url);
+      const data = await result.json();
+      setRecipes(data.meals);
+    };
   }, [url]);
-  //  On search handler
-  const onSearchHandler = () => {
-    //Validation
-    if (userInput === "") {
-      alert("please enter the recipe name");
-      return;
-    } else if (recipe.meals === null) {
-      alert("Sorry we have not got this recipe yet !");
-      // console.log("not available");
-      return;
-    } else {
-      setFilteredRecipe(recipe);
-    }
-  };
 
-  // On favorite color handler
-  const onFavoriteIconClickHandler = (element: Item) => {
-    const changeColor = [...filteredRecipe.meals];
-    // console.log(changeColor, "...");
-    const index = changeColor.findIndex(
-      (item) => item.idMeal === element.idMeal
-    );
-    if (index !== -1) {
-      setFavoriteColor("red");
-    }
-  };
-
-  // Adding item to recipe
-  const addToFavorite = (fitem: Item) => {
-    let updateFavorite = [...favorite];
-    updateFavorite = [...favorite, fitem];
-    onFavoriteIconClickHandler(fitem);
-    setFavorite(updateFavorite);
-  };
   return (
     <div className="App">
-      <NavBar favorite={favorite} />
+      <NavBar favoriteRecipe={favoriteRecipe} />
 
       <Routes>
         <Route path="" element={<Home />}></Route>
@@ -94,18 +50,21 @@ function App() {
           path="/recipe"
           element={
             <Recipe
-              userInput={userInput}
               setUserInput={setUserInput}
-              onSearchHandler={onSearchHandler}
-              filteredRecipe={filteredRecipe}
-              addToFavorite={addToFavorite}
-              favoriteColor={favoriteColor}
+              recipes={recipes}
+              setFavoriteRecipe={setFavoriteRecipe}
+              favoriteRecipe={favoriteRecipe}
             />
           }
         ></Route>
         <Route
           path="/favorite"
-          element={<Favorite favorite={favorite} userInput={userInput} />}
+          element={
+            <Favorite
+              favoriteRecipe={favoriteRecipe}
+              setFavoriteRecipe={setFavoriteRecipe}
+            />
+          }
         ></Route>
         <Route path="/contact" element={<Contact />}></Route>
       </Routes>

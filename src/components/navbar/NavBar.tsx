@@ -2,17 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import StyledBadge from "@mui/material/Badge";
-import { purple } from "@mui/material/colors";
 
-import { Item } from "../../App";
 import chef from "../../assets/chef.png";
 import "./NavBar.css";
 
-type FavoriteType = {
-  favorite: Item[];
-};
+import { RecipeT } from "../../App";
 
-const NavBar = ({ favorite }: FavoriteType) => {
+type Prop = {
+  favoriteRecipe: RecipeT[];
+};
+const NavBar = ({ favoriteRecipe }: Prop) => {
   return (
     <div className="navbar">
       <div className="logo">
@@ -26,7 +25,21 @@ const NavBar = ({ favorite }: FavoriteType) => {
         <Link className="navBarLink" to="/recipe">
           RECIPE
         </Link>
-        <StyledBadge badgeContent={favorite.length} sx={{ bgcolor: purple }}>
+        <StyledBadge
+          badgeContent={favoriteRecipe.length}
+          sx={{
+            // vertical: "top",
+            // horizontal: "right",
+            // // right: -3,
+
+            // textDecoration: purple,
+            "& .MuiBadge-badge": {
+              color: "purple",
+              top: -3,
+              // backgroundColor: "green",
+            },
+          }}
+        >
           <Link className="navBarLink" to="/favorite">
             FAVORITE
           </Link>

@@ -1,14 +1,11 @@
 import React from "react";
-import { TextField, Button } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 
-// Prop type declaration
-type PropType = {
-  userInput: string;
+// Prop type
+type Prop = {
   setUserInput: React.Dispatch<React.SetStateAction<string>>;
-
-  onSearchHandler: React.MouseEventHandler<HTMLButtonElement>;
 };
-const SearchForm = ({ setUserInput, onSearchHandler, userInput }: PropType) => {
+const SearchForm = ({ setUserInput }: Prop) => {
   // User Input handler
   const onUserInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value);
@@ -17,21 +14,12 @@ const SearchForm = ({ setUserInput, onSearchHandler, userInput }: PropType) => {
 
   return (
     <div>
-      <form action="">
-        {/* <label htmlFor="">Enter recipe name:</label> */}
-        <TextField
-          label="Please enter recipe name"
-          variant="outlined"
-          onChange={onUserInputHandler}
-          value={userInput}
-          helperText={`Suggetion:${userInput}`}
-        />
-        <Button variant="text" color="primary" onClick={onSearchHandler}>
-          Search
-        </Button>
-        {/* <input type="text" onChange={onUserInputHandler} /> */}
-        {/* <Button onClick={onSearchHandler}>Search</Button> */}
-      </form>
+      <TextField
+        label="Enter recipe name"
+        variant="standard"
+        onChange={onUserInputHandler}
+        helperText={`Suggetion:lamb, cake, salad`}
+      />
     </div>
   );
 };
